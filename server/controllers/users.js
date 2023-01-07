@@ -1,4 +1,4 @@
-import User from "../models/user.js";
+import User from "../models/User.js";
 
 /* READ USER */
 
@@ -8,7 +8,7 @@ export const getUser = async (req, res) => {
         const user = await User.findById(id);
         res.status(200).json(user);
     }catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(404).json({ error: error.message });
     }
 }
 
@@ -24,16 +24,16 @@ export const getUserFriends = async (req, res) => {
 
         const formattedFriends = friends.map(({
             _id,
-            FirstName,
-            LastName,
+            firstName,
+            lastName,
             picturePath,
             occupation,
             location
         }) => {
             return {
                 _id,
-                FirstName,
-                LastName,
+                firstName,
+                lastName,
                 picturePath,
                 occupation,
                 location
@@ -41,7 +41,7 @@ export const getUserFriends = async (req, res) => {
         })
         res.status(200).json(formattedFriends);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(404).json({ error: error.message });
     }
 }
 
@@ -66,22 +66,22 @@ export const addRemoveFriend = async (req, res) => {
 
         const formattedFriends = friends.map(({
             _id,
-            FirstName,
-            LastName,
+            firstName,
+            lastName,
             picturePath,
             occupation,
             location
         }) => {
             return {
                 _id,
-                FirstName,
-                LastName,
+                firstName,
+                lastName,
                 picturePath,
                 occupation,
                 location
             };
         })
-        res.status(200).json(formattedFriends);
+        res.status(201).json(formattedFriends);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(409).json({ error: error.message });
     }}

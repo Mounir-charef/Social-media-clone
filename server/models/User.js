@@ -5,29 +5,29 @@ const UserSchema = new mongoose.Schema(
         firstName: {
             type: String,
             required: true,
-            min: 3,
+            min: 2,
             max: 50,
         },
         lastName: {
             type: String,
             required: true,
-            min: 3,
+            min: 2,
             max: 50,
         },
         email: {
             type: String,
             required: true,
             max: 50,
+            unique: true,
         },
         password: {
             type: String,
             required: true,
-            min: 6,
+            min: 5,
         },
-        profilePicture: {
+        picturePath: {
             type: String,
             default: "",
-            min: 6,
         },
         friends: {
             type: Array,
@@ -37,7 +37,9 @@ const UserSchema = new mongoose.Schema(
         occupation: String,
         viewedProfile: Number,
         impressions: Number,
-    }, {timestamps: true});
+    },
+    { timestamps: true }
+);
 
 const User = mongoose.model("User", UserSchema);
 export default User;

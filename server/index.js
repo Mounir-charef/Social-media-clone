@@ -14,9 +14,9 @@ import postRoutes from "./routes/posts.js";
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/posts.js";
 import { verifyToken } from "./middleware/auth.js";
-import User from "./models/User.js";
-import Post from "./models/Post.js";
-import { users, posts } from "./data/index.js";
+// import User from "./models/User.js";
+// import Post from "./models/Post.js";
+// import { users, posts } from "./data/index.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -26,6 +26,7 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+mongoose.set('strictQuery', false);
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
@@ -61,4 +62,7 @@ mongoose.connect(process.env.MONGO_URL,
     },
     () => {
     app.listen(PORT, () => console.log(`Server running at Port: ${PORT}`));
+    // to add users and posts to the database use these lines:
+    // User.insertMany(users).catch((err) => console.log(err));
+    // Post.insertMany(posts).catch((err) => console.log(err));
 });
