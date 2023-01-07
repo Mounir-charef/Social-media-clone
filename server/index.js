@@ -62,7 +62,7 @@ await mongoose.connect(process.env.MONGO_URL,
     },
     (err) => {
     if (err) {
-        console.log(err)
+        console.log(err, "Mongoose connection went crazy");
     } else {
         app.listen(PORT, () => console.log(`Server running at Port: ${PORT}`));
         // to add users and posts to the database use these lines:
