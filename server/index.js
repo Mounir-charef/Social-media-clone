@@ -60,13 +60,9 @@ mongoose.connect(process.env.MONGO_URL,
         useNewUrlParser: true,
         useUnifiedTopology: true,
     },
-    (err) => {
-    if (err) {
-        console.log(err, "Mongoose connection went crazy");
-    } else {
+    () => {
         app.listen(PORT, () => console.log(`Server running at Port: ${PORT}`));
         // to add users and posts to the database use these lines:
         // User.insertMany(users).catch((err) => console.log(err));
         // Post.insertMany(posts).catch((err) => console.log(err));
-    }
 });
