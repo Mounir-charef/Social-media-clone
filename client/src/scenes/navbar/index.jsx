@@ -19,9 +19,10 @@ import {
     Help,
     Menu,
     Close,
+    PersonOutline
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { setMode, setLogout } from "../../state/index.js";
+import {setMode, setLogout} from "../../state/index.js";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "../../styles/FlexBetween.jsx";
 
@@ -29,10 +30,7 @@ const Navbar = () => {
     const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector((state) => state.user);
-    console.log(user);
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-
     const theme = useTheme();
     const neutralLight = theme.palette.neutral.light;
     const dark = theme.palette.neutral.dark;
@@ -40,7 +38,7 @@ const Navbar = () => {
     const primaryLight = theme.palette.primary.light;
     const alt = theme.palette.background.alt;
 
-    const fullName = `Mounir Charef`;
+    const fullName = useSelector((state) => state.name);;
 
     return (
         <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -52,7 +50,7 @@ const Navbar = () => {
                     onClick={() => navigate("/home")}
                     sx={{
                         "&:hover": {
-                            color: primaryLight,
+                            opacity: 0.6,
                             cursor: "pointer",
                         },
                     }}
@@ -84,62 +82,75 @@ const Navbar = () => {
                             <LightMode sx={{ color: dark, fontSize: "25px" }} />
                         )}
                     </IconButton>
-                    <Message sx={{ fontSize: "25px" }} />
-                    <Notifications sx={{ fontSize: "25px" }} />
-                    <Help sx={{ fontSize: "25px" }} />
-                    <FormControl variant="standard" value={fullName}>
-                        <Select
-                            value={fullName}
-                            sx={{
-                                backgroundColor: neutralLight,
-                                width: "150px",
-                                borderRadius: "0.25rem",
-                                p: "0.25rem 1rem",
-                                "& .MuiSvgIcon-root": {
-                                    pr: "0.25rem",
-                                    width: "3rem",
-                                },
-                                "& .MuiSelect-select:focus": {
+                    <IconButton disabled>
+                        <Message sx={{ fontSize: "25px" }} />
+                    </IconButton>
+                    <IconButton disabled>
+                        <Notifications sx={{ fontSize: "25px" }} />
+                    </IconButton>
+                    <IconButton disabled>
+                        <Help sx={{ fontSize: "25px" }} />
+                    </IconButton>
+
+                    <Box display='flex' gap='1rem' alignItems='center'>
+                        <FormControl variant="standard" value={fullName}>
+                            <Select
+                                value={fullName}
+                                sx={{
                                     backgroundColor: neutralLight,
-                                },
-                            }}
-                            input={<InputBase />}
-                        >
-                            <MenuItem value={fullName}>
-                                <Typography>{fullName}</Typography>
-                            </MenuItem>
-                            <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
-                        </Select>
-                    </FormControl>
+                                    width: "150px",
+                                    borderRadius: "0.25rem",
+                                    p: "0.25rem 1rem",
+                                    "& .MuiSvgIcon-root": {
+                                        pr: "0.25rem",
+                                        width: "3rem",
+                                    },
+                                    "& .MuiSelect-select:focus": {
+                                        backgroundColor: neutralLight,
+                                    },
+                                }}
+                                input={<InputBase />}
+                            >
+                                <MenuItem value={fullName}>
+                                    <Typography>{fullName}</Typography>
+                                </MenuItem>
+                                <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <PersonOutline sx={{ fontSize: '35px'}}/>
+                    </Box>
                 </FlexBetween>
             ) : (
                 <IconButton
                     onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
                 >
-                    <Menu />
+                    <Menu sx={{fontSize: '1.75em'}}/>
                 </IconButton>
             )}
 
             {/* MOBILE NAV */}
             {!isNonMobileScreens && isMobileMenuToggled && (
                 <Box
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
                     position="fixed"
                     right="0"
                     bottom="0"
-                    height="100%"
+                    height="100vh"
                     zIndex="10"
-                    maxWidth="500px"
-                    minWidth="300px"
+                    width="100%"
                     backgroundColor={background}
                 >
                     {/* CLOSE ICON */}
-                    <Box display="flex" justifyContent="flex-end" p="1rem">
-                        <IconButton
-                            onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
-                        >
-                            <Close />
-                        </IconButton>
-                    </Box>
+
+                    <IconButton
+                        sx={{alignSelf: 'flex-end', paddingBottom: '15vh'}}
+                        onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
+                    >
+                        <Close sx={{fontSize: '1.75em'}}/>
+                    </IconButton>
+
 
                     {/* MENU ITEMS */}
                     <FlexBetween
@@ -147,21 +158,21 @@ const Navbar = () => {
                         flexDirection="column"
                         justifyContent="center"
                         alignItems="center"
-                        gap="3rem"
+                        gap="4rem"
                     >
                         <IconButton
                             onClick={() => dispatch(setMode())}
-                            sx={{ fontSize: "25px" }}
+                            sx={{ fontSize: "40px" }}
                         >
                             {theme.palette.mode === "dark" ? (
-                                <DarkMode sx={{ fontSize: "25px" }} />
+                                <DarkMode sx={{ fontSize: "40px" }} />
                             ) : (
-                                <LightMode sx={{ color: dark, fontSize: "25px" }} />
+                                <LightMode sx={{ color: dark, fontSize: "40px" }} />
                             )}
                         </IconButton>
-                        <Message sx={{ fontSize: "25px" }} />
-                        <Notifications sx={{ fontSize: "25px" }} />
-                        <Help sx={{ fontSize: "25px" }} />
+                        <Message sx={{ fontSize: "40px" }} />
+                        <Notifications sx={{ fontSize: "40px" }} />
+                        <Help sx={{ fontSize: "40px" }} />
                         <FormControl variant="standard" value={fullName}>
                             <Select
                                 value={fullName}

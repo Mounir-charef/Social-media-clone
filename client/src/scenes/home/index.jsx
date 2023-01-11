@@ -3,9 +3,9 @@ import Navbar from "../navbar";
 
 function HomePage() {
     return (
-        <Box>
+        <div>
             <Navbar />
-        </Box>
+        </div>
     );
 }
 
