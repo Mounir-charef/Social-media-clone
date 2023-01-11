@@ -33,7 +33,7 @@ function NavBar() {
         dispatch = useDispatch(),
         navigate = useNavigate(),
         user = useSelector((state) => state.user),
-        isNonMobile = useMediaQuery(useTheme().breakpoints.up("md"));
+        isNonMobile = useMediaQuery("(min-width: 780px)");
 
     const theme = useTheme();
     const neutralLight = theme.palette.neutral.light;
@@ -42,7 +42,7 @@ function NavBar() {
     const primary = theme.palette.primary.light;
     const alt = theme.palette.background.alt;
 
-    const fullName = `${user.firstName} ${user.lastName}`;
+    const fullName = `hamid gader`;
     return (
         <FlexBetween padding="1rem 6%" backgroundColor={alt}>
             <FlexBetween gap="1.75rem">
@@ -127,7 +127,7 @@ function NavBar() {
                     <Box
                         position="fixed"
                         right="0"
-                        bottom="0"
+                        top="0"
                         zIndex="10"
                         maxWidth="500px"
                         minwidth="300px"
