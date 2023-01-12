@@ -9,6 +9,7 @@ import {
     FormControl,
     useTheme,
     useMediaQuery,
+    Avatar,
 } from "@mui/material";
 import {
     Search,
@@ -17,14 +18,14 @@ import {
     LightMode,
     Notifications,
     Help,
-    Menu,
     Close,
-    PersonOutline
+    Person
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import {setMode, setLogout} from "../../state/index.js";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "../../styles/FlexBetween.jsx";
+import StyledBadge from "../../styles/StyledBadge.jsx";
 
 const Navbar = () => {
     const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -35,10 +36,9 @@ const Navbar = () => {
     const neutralLight = theme.palette.neutral.light;
     const dark = theme.palette.neutral.dark;
     const background = theme.palette.background.default;
-    const primaryLight = theme.palette.primary.light;
     const alt = theme.palette.background.alt;
-
-    const fullName = useSelector((state) => state.name);;
+    const user = useSelector(state => state.user);
+    const fullName = `${user.firstName} ${user.lastName}`;
 
     return (
         <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -117,14 +117,32 @@ const Navbar = () => {
                                 <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
                             </Select>
                         </FormControl>
-                        <PersonOutline sx={{ fontSize: '35px'}}/>
+                        {/*<PersonOutline sx={{ fontSize: '35px'}}/>*/}
+
+                        <StyledBadge
+                            overlap="circular"
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                            variant="dot"
+                        >
+                            <Avatar>
+                                <Person />
+                            </Avatar>
+                        </StyledBadge>
                     </Box>
                 </FlexBetween>
             ) : (
                 <IconButton
                     onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
                 >
-                    <Menu sx={{fontSize: '1.75em'}}/>
+                    <StyledBadge
+                        overlap="circular"
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                        variant="dot"
+                    >
+                        <Avatar>
+                            <Person />
+                        </Avatar>
+                    </StyledBadge>
                 </IconButton>
             )}
 
@@ -136,16 +154,16 @@ const Navbar = () => {
                     alignItems="center"
                     position="fixed"
                     right="0"
-                    bottom="0"
-                    height="100vh"
+                    top="0"
+                    height="60%"
                     zIndex="10"
-                    width="100%"
+                    width="60%"
                     backgroundColor={background}
                 >
                     {/* CLOSE ICON */}
 
                     <IconButton
-                        sx={{alignSelf: 'flex-end', paddingBottom: '15vh'}}
+                        sx={{alignSelf: 'flex-end', marginBottom: '15%'}}
                         onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
                     >
                         <Close sx={{fontSize: '1.75em'}}/>
@@ -156,9 +174,9 @@ const Navbar = () => {
                     <FlexBetween
                         display="flex"
                         flexDirection="column"
-                        justifyContent="center"
+                        justifyContent="flex-end"
                         alignItems="center"
-                        gap="4rem"
+                        gap="2rem"
                     >
                         <IconButton
                             onClick={() => dispatch(setMode())}
@@ -170,9 +188,15 @@ const Navbar = () => {
                                 <LightMode sx={{ color: dark, fontSize: "40px" }} />
                             )}
                         </IconButton>
-                        <Message sx={{ fontSize: "40px" }} />
-                        <Notifications sx={{ fontSize: "40px" }} />
-                        <Help sx={{ fontSize: "40px" }} />
+                        <IconButton disabled>
+                            <Message sx={{ fontSize: "40px" }} />
+                        </IconButton>
+                        <IconButton disabled>
+                            <Notifications sx={{ fontSize: "40px" }} />
+                        </IconButton>
+                        <IconButton disabled>
+                            <Help sx={{ fontSize: "40px" }} />
+                        </IconButton>
                         <FormControl variant="standard" value={fullName}>
                             <Select
                                 value={fullName}
