@@ -52,23 +52,65 @@ const initialValuesLogin = {
 
 function Form() {
     const [pageType, setPageType] = useState("login");
-    const theme = useTheme();
+    const { palette } = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const isNonMobile = useMediaQuery('(min-width:1000px)');
+    const isNonMobile = useMediaQuery('(min-width:600px)');
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
 
-    const handleFormSubmit = async (values, onSubmitProps) => {
+    const register = async (values, onSubmitProps) => {
+        // send form data with an image to server
+        const formData = new FormData();
+        for( let value in values) {
+            formData.append(value, values[value]);
+        }
+        if(values.picture) {
+            formData.append('picturePath', values.picture.name);
+        }
+        console.log(formData);
+        const savedUserResponse = await fetch(
+            "http://127.0.0.1:3001/auth/register",
+            {
+                method: "POST",
+                body: formData,
+            });
+        const savedUser = await savedUserResponse.json();
+        onSubmitProps.resetForm();
+        if (savedUser) {
+            setPageType("login");
+        }
+    };
 
-    }
+    const login = async (values, onSubmitProps) => {
+        const response = await fetch("http://127.0.0.1:3001/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+        });
+        const {user, token} = await response.json();
+        if (user) {
+            dispatch(setLogin({
+                user: user,
+                token: token,
+            }));
+            navigate("/home");
+        }
+        onSubmitProps.resetForm();
+    };
+
+    const handleFormSubmit = async (values, onSubmitProps) => {
+        if (isLogin) await login(values, onSubmitProps);
+        if (isRegister) await register(values, onSubmitProps);
+    };
 
     return (
         <Formik
             initialValues={isLogin? initialValuesLogin : initialValuesRegister}
             onSubmit={handleFormSubmit}
             validationSchema={isLogin? loginSchema : registerSchema}
-            validateOnBlur='true'
         >
             {({
                 values,
@@ -136,7 +178,7 @@ function Form() {
 
                                 <Box
                                     sx={{ gridColumn: "span 2" }}
-                                    border={`1px solid ${theme.neutral.medium}`}
+                                    border={`1px solid ${palette.neutral.medium}`}
                                     borderRadius="5px"
                                     p="1rem"
                                 >
@@ -150,7 +192,7 @@ function Form() {
                                         {({ getRootProps, getInputProps }) => (
                                             <Box
                                                 {...getRootProps()}
-                                                border={`2px dashed ${theme.primary.main}`}
+                                                border={`2px dashed ${palette.primary.main}`}
                                                 p='1rem'
                                                 sx={{
                                                     '&:hover': {
@@ -196,6 +238,19 @@ function Form() {
                             helperText={touched.password && Boolean(errors.password)}
                             sx={{ gridColumn: "span 2" }}
                         />
+                        {isRegister && (
+                            <TextField
+                                label="Confirm Password"
+                                type="password"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.confirmPassword}
+                                name="confirmPassword"
+                                error={Boolean(touched.confirmPassword) && Boolean(errors.confirmPassword)}
+                                helperText={touched.confirmPassword && Boolean(errors.confirmPassword)}
+                                sx={{ gridColumn: "span 2" }}
+                            />
+                        )}
                     </Box>
 
                     {/*BUTTONS*/}
@@ -206,11 +261,13 @@ function Form() {
                             fullWidth
                             sx={{
                                 m: "1rem 0",
-                                backgroundColor: theme.primary.main,
+                                backgroundColor: palette.primary.main,
                                 padding: "1rem",
-                                color: theme.background.alt,
-                                '&:hover': {
-                                    backgroundColor: theme.background.main,
+                                fontSize: "16px",
+                                fontWeight: "bold",
+                                "&:hover": {
+                                    color: palette.primary.main,
+                                    backgroundColor: palette.neutral.light,
                                 }
                             }}
                         >
@@ -223,10 +280,10 @@ function Form() {
                             }}
                             sx={{
                                 textDecoration: "underline",
-                                color: theme.primary.main,
+                                color: palette.primary.main,
                                 '&:hover': {
                                     cursor: "pointer",
-                                    color: theme.primary.light,
+                                    color: palette.primary.light,
                                 }
                             }}
                         >

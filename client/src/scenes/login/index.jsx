@@ -1,5 +1,6 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from './Form.jsx'
+
 function LoginPage() {
     const theme = useTheme()
     // const isNonMobile = useMediaQuery(theme.breakpoints.up('sm'))
@@ -36,7 +37,7 @@ function LoginPage() {
                 <Typography fontWeight='500' variant='h5' sx={{ mb: '1.5rem' }}>
                     Please login to continue.
                 </Typography>
-
+                <Form />
             </Box>
         </Box>
     );
