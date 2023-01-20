@@ -24,7 +24,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {setMode, setLogout} from "../../state/index.js";
 import { useNavigate } from "react-router-dom";
-import FlexBetween from "../../styles/FlexBetween.jsx";
+import FlexBetween from "../../components/FlexBetween.jsx";
 import StyledBadge from "../../styles/StyledBadge.jsx";
 
 const Navbar = () => {
