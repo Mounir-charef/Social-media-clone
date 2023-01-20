@@ -38,7 +38,6 @@ const Navbar = () => {
     const background = theme.palette.background.default;
     const alt = theme.palette.background.alt;
     const user = useSelector(state => state.user);
-    console.table(user.user);
     const fullName = `${user.firstName} ${user.lastName}`;
 
     return (

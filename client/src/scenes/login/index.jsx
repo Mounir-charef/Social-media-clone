@@ -1,6 +1,5 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from './Form.jsx'
-
 function LoginPage() {
     const theme = useTheme()
     // const isNonMobile = useMediaQuery(theme.breakpoints.up('sm'))
