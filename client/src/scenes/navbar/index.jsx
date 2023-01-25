@@ -124,9 +124,16 @@ const Navbar = () => {
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                             variant="dot"
                         >
-                            <Avatar>
-                                <Person />
-                            </Avatar>
+                            {!user.picturePath ? (
+                                <Avatar>
+                                    <Person sx={{
+                                        width: '1.2em',
+                                        height: '1.2em'
+                                    }} />
+                                </Avatar>
+                            ): (
+                                <Avatar alt={fullName} src={`http://localhost:3001/assets/${user.picturePath}`} />
+                            )}
                         </StyledBadge>
                     </Box>
                 </FlexBetween>
@@ -141,19 +148,16 @@ const Navbar = () => {
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                         variant="dot"
                     >
-                        <Avatar>
-                            <Person sx={{
-                                width: '1.2em',
-                                height: '1.2em'
-                            }} />
-                        </Avatar>
-                        {/*{user.picturePath ? (*/}
-                        {/*    <Avatar src={user.picturePath} />*/}
-                        {/*): (*/}
-                        {/*    <Avatar>*/}
-                        {/*        <Person />*/}
-                        {/*    </Avatar>*/}
-                        {/*)}*/}
+                        {!user.picturePath ? (
+                            <Avatar>
+                                <Person sx={{
+                                    width: '1.2em',
+                                    height: '1.2em'
+                                }} />
+                            </Avatar>
+                        ): (
+                            <Avatar alt={fullName} src={`http://localhost:3001/assets/${user.picturePath}`} />
+                        )}
                     </StyledBadge>
                 </IconButton>
             )}
