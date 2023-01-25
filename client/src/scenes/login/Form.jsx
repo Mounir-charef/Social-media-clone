@@ -68,17 +68,20 @@ function Form() {
         if(values.picture) {
             formData.append('picturePath', values.picture.name);
         }
-        console.log(formData);
         const savedUserResponse = await fetch(
             "http://127.0.0.1:3001/auth/register",
             {
                 method: "POST",
                 body: formData,
             });
-        const savedUser = await savedUserResponse.json();
+        const {savedUser, token} = await savedUserResponse.json();
         onSubmitProps.resetForm();
         if (savedUser) {
-            setPageType("login");
+            dispatch(setLogin({
+                user: savedUser,
+                token: token,
+            }));
+            navigate("/home");
         }
     };
 

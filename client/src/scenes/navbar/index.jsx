@@ -130,7 +130,9 @@ const Navbar = () => {
                         </StyledBadge>
                     </Box>
                 </FlexBetween>
-            ) : (
+            ) :
+                // MOBILE NAV
+                (
                 <IconButton
                     onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
                 >
@@ -140,8 +142,18 @@ const Navbar = () => {
                         variant="dot"
                     >
                         <Avatar>
-                            <Person />
+                            <Person sx={{
+                                width: '1.2em',
+                                height: '1.2em'
+                            }} />
                         </Avatar>
+                        {/*{user.picturePath ? (*/}
+                        {/*    <Avatar src={user.picturePath} />*/}
+                        {/*): (*/}
+                        {/*    <Avatar>*/}
+                        {/*        <Person />*/}
+                        {/*    </Avatar>*/}
+                        {/*)}*/}
                     </StyledBadge>
                 </IconButton>
             )}
