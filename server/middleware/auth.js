@@ -13,6 +13,7 @@ export const verifyToken = async(req, res, next) => {
         next();
 
     } catch (error) {
+        console.log('oops')
         res.status(500).json({error: error.message});
     }
 }

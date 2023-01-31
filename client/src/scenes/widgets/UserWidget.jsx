@@ -5,9 +5,8 @@ import {
     WorkOutlineOutlined,
     Twitter,
     LinkedIn
-
 } from "@mui/icons-material";
-import {Box, Typography, Divider, useTheme, Avatar} from "@mui/material";
+import {Box, Typography, Divider, useTheme, Avatar, IconButton} from "@mui/material";
 import FlexBetween from "../../components/FlexBetween.jsx";
 import WidgetWrapper from "../../components/WidgetWrapper.jsx";
 import { useSelector } from "react-redux";
@@ -24,10 +23,12 @@ const UserWidget = () => {
 
     return (
         <WidgetWrapper>
-            <FlexBetween gap='0.5rem' pb='1.1rem' onclick={() => navigate(`/profile/${user.userId}`)}>
+            <FlexBetween gap='0.5rem' pb='1.1rem'>
                 {/*4rows*/}
                 <FlexBetween gap='1rem'>
-                    <Avatar alt={user.firstName} src={`http://localhost:3001/assets/${user.picturePath}`} />
+                    <IconButton onClick={() => navigate(`/profile/${user._id}`)} >
+                        <Avatar alt={user.firstName} src={`/api/assets/${user.picturePath}`}/>
+                    </IconButton>
                     <Box>
                         <Typography
                             variant='h4'
@@ -38,7 +39,9 @@ const UserWidget = () => {
                                     color: palette.primary.light,
                                     cursor: "pointer",
                                 }
-                            }}>
+                            }}
+                            onClick={() => navigate(`/profile/${user._id}`)}
+                        >
                             {user.firstName} {user.lastName}
                         </Typography>
                         <Typography variant='body2' color={medium}>
@@ -46,7 +49,15 @@ const UserWidget = () => {
                         </Typography>
                     </Box>
                 </FlexBetween>
-                <ManageAccountsOutlined />
+                <ManageAccountsOutlined
+                    sx={{
+                        "&:hover": {
+                            color: palette.primary.light,
+                            cursor: "pointer",
+                        }
+                    }}
+                    onClick={() => navigate(`/profile/${user._id}`)}
+                />
             </FlexBetween>
 
             <Divider />
@@ -54,11 +65,11 @@ const UserWidget = () => {
                 <Box p='1rem 0'>
                     <Box display='flex' alignItems='center' gap='1rem' mb='0.5rem'>
                         <LocationOnOutlined fontSize="large" sx={{color: main}}/>
-                        <Typography color={medium}>{user.location}</Typography>
+                        <Typography color={medium}>{user.location || "Unknown"}</Typography>
                     </Box>
                     <Box display='flex' alignItems='center' gap='1rem' mb='0.5rem'>
                         <WorkOutlineOutlined fontSize="large" sx={{color: main}}/>
-                        <Typography color={medium}>{user.occupation}</Typography>
+                        <Typography color={medium}>{user.occupation || "Not currently employed"}</Typography>
                     </Box>
                 </Box>
                 <Divider />
@@ -89,7 +100,7 @@ const UserWidget = () => {
                             <Twitter sx={{color: main}} fontSize='large'/>
                             <Box>
                                 <Typography color={main} fontWeight='500'>Twitter</Typography>
-                                <Typography color={medium} fontWeight='500'>Social Network</Typography>
+                                <Typography color={medium} variant='body2'>Social Network</Typography>
                             </Box>
                         </FlexBetween>
                         <EditOutlined sx={{color: main}} />
@@ -101,7 +112,7 @@ const UserWidget = () => {
                             <LinkedIn sx={{color: main}} fontSize='large'/>
                             <Box>
                                 <Typography color={main} fontWeight='500'>Linkedin</Typography>
-                                <Typography color={medium} fontWeight='500'>Network Platform</Typography>
+                                <Typography color={medium} variant='body2'>Network Platform</Typography>
                             </Box>
                         </FlexBetween>
                         <EditOutlined sx={{color: main}} />

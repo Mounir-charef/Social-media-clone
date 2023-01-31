@@ -132,7 +132,7 @@ const Navbar = () => {
                                     }} />
                                 </Avatar>
                             ): (
-                                <Avatar alt={fullName} src={`http://localhost:3001/assets/${user.picturePath}`} />
+                                <Avatar alt={fullName} src={`/assets/${user.picturePath}`} />
                             )}
                         </StyledBadge>
                     </Box>
@@ -171,15 +171,14 @@ const Navbar = () => {
                     position="fixed"
                     right="0"
                     top="0"
-                    height="60%"
                     zIndex="10"
-                    width="60%"
                     backgroundColor={background}
+                    p='1em 4em 2em'
                 >
                     {/* CLOSE ICON */}
 
                     <IconButton
-                        sx={{alignSelf: 'flex-end', marginBottom: '15%'}}
+                        sx={{alignSelf: 'flex-end', marginBottom: '1em', transform: 'translateX(2rem)'}}
                         onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
                     >
                         <Close sx={{fontSize: '1.75em'}}/>
