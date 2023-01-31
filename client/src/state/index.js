@@ -29,7 +29,7 @@ export const authSlice = createSlice({
             if(state.user){
                 state.user.friends = action.payload;
             }else{
-                console.error("No user");
+                console.error("No user found");
             }
         },
         setPosts: (state, action) => {
